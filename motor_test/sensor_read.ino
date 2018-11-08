@@ -12,12 +12,18 @@ int t_on = 12; //microseconds (us)
 int t_wait = 400;
 
 void setup(){
-
-	//Open serial monitor
 	Serial.begin(9600);
 }
 
+
 void loop(){
+	/* Pseudocode for sensor:
+	----------------------------------------------
+	1. Set sensor channel pin to high
+	2. After a time t_on, set channel pins inputs
+	3. After a time t_wait, read value from sensor
+	   (Sensor value is digital 1 or 0)
+	*/
 
 	// Channel pins set to output
 	pinMode(sensor1, OUTPUT);
@@ -83,11 +89,14 @@ void loop(){
 }
 
 void findDelay(){
+	/* Find minimum t_wait for sensor to 
+	distinguish between white and black */
+
 	int start_time = micros();
 	int end_time;
 
 	while (digitalRead(sensor1) == 1){
-	end_time = micros();
+		end_time = micros();
 	};
 
 	int time_elapsed = end_time - start_time;
