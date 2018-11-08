@@ -7,14 +7,14 @@ const int sensor6 = 68;
 const int sensor7 = 53;
 const int sensor8 = 69;
 
+// Sensor sampling config
+int t_on = 12; //microseconds (us)
+int t_wait = 400;
+
 void setup(){
 
 	//Open serial monitor
 	Serial.begin(9600);
-
-	// Configurations for sensor sampling
-	int t_on = 10; //ms
-	int t_wait = 10;
 }
 
 void loop(){
@@ -38,8 +38,9 @@ void loop(){
 	digitalWrite(sensor6, HIGH);
 	digitalWrite(sensor7, HIGH);
 	digitalWrite(sensor8, HIGH);
-	
-	delay(t_on);
+
+	// Length of HIGH output
+	delayMicroseconds(t_on);
 
 	// Set channel pins to input
 	pinMode(sensor1, INPUT);
@@ -50,7 +51,9 @@ void loop(){
 	pinMode(sensor6, INPUT);
 	pinMode(sensor7, INPUT);
 	pinMode(sensor8, INPUT);
-	delay(t_wait);
+
+
+	delayMicroseconds(t_wait);
 
 	// Read channel values
 	int read1 = digitalRead(sensor1);
@@ -63,16 +66,30 @@ void loop(){
 	int read8 = digitalRead(sensor8);
 
 	// Print sensor values to Serial Monitor
-	Serial.println(read1);
-	Serial.println(read2);
-	Serial.println(read3);
-	Serial.println(read4);
-	Serial.println(read5);
-	Serial.println(read6);
-	Serial.println(read7);
-	Serial.println(read8);
+	// Serial.println(read1);
+	// Serial.println(read2);
+	// Serial.println(read3);
+	// Serial.println(read4);
+	// Serial.println(read5);
+	// Serial.println(read6);
+	// Serial.println(read7);
+	// Serial.println(read8);
+
+	findDelay();
 
 	//Delay for stability
 	delay(1);
 
+}
+
+void findDelay(){
+	int start_time = micros();
+	int end_time;
+
+	while (digitalRead(sensor1) == 1){
+	end_time = micros();
+	};
+
+	int time_elapsed = end_time - start_time;
+	Serial.println(time_elapsed);
 }
