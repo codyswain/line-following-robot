@@ -58,9 +58,6 @@ void loop(){
 	pinMode(sensor7, INPUT);
 	pinMode(sensor8, INPUT);
 
-
-	delayMicroseconds(t_wait);
-
 	// Read channel values
 	int read1 = digitalRead(sensor1);
 	int read2 = digitalRead(sensor2);
