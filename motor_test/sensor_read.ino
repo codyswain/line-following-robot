@@ -9,7 +9,7 @@ const int sensor8 = 69;
 
 // Sensor sampling config
 int t_on = 12; //microseconds (us)
-int t_wait = 400;
+int t_wait = 500000; //Why does this have to .5 seconds
 
 void setup(){
 	Serial.begin(9600);
@@ -17,7 +17,13 @@ void setup(){
 
 
 void loop(){
-	/* Pseudocode for sensor:
+
+}
+
+
+void readSensors(){
+	/*
+	Pseudocode for sensor:
 	----------------------------------------------
 	1. Set sensor channel pin to high
 	2. After a time t_on, set channel pins inputs
@@ -25,7 +31,7 @@ void loop(){
 	   (Sensor value is digital 1 or 0)
 	*/
 
-	// Channel pins set to output
+	// Set sensor pins to OUTPUT
 	pinMode(sensor1, OUTPUT);
 	pinMode(sensor2, OUTPUT);
 	pinMode(sensor3, OUTPUT);
@@ -35,7 +41,7 @@ void loop(){
 	pinMode(sensor7, OUTPUT);
 	pinMode(sensor8, OUTPUT);
 
-	// Activate sensor channels
+	// Activate sensor pins
 	digitalWrite(sensor1, HIGH);
 	digitalWrite(sensor2, HIGH);
 	digitalWrite(sensor3, HIGH);
@@ -46,7 +52,8 @@ void loop(){
 	digitalWrite(sensor8, HIGH);
 
 	// Length of HIGH output
-	delayMicroseconds(t_on);
+	// Determined by findDelay(); function
+  	delayMicroseconds(t_on);
 
 	// Set channel pins to input
 	pinMode(sensor1, INPUT);
@@ -58,7 +65,7 @@ void loop(){
 	pinMode(sensor7, INPUT);
 	pinMode(sensor8, INPUT);
 
-	// Read channel values
+	// Read sensor values
 	int read1 = digitalRead(sensor1);
 	int read2 = digitalRead(sensor2);
 	int read3 = digitalRead(sensor3);
@@ -68,22 +75,11 @@ void loop(){
 	int read7 = digitalRead(sensor7);
 	int read8 = digitalRead(sensor8);
 
-	// Print sensor values to Serial Monitor
-	// Serial.println(read1);
-	// Serial.println(read2);
-	// Serial.println(read3);
-	// Serial.println(read4);
-	// Serial.println(read5);
-	// Serial.println(read6);
-	// Serial.println(read7);
-	// Serial.println(read8);
-
-	findDelay();
-
 	//Delay for stability
-	delay(1);
-
+  	delay(1);
 }
+
+
 
 void findDelay(){
 	/* Find minimum t_wait for sensor to 
@@ -99,3 +95,6 @@ void findDelay(){
 	int time_elapsed = end_time - start_time;
 	Serial.println(time_elapsed);
 }
+
+
+
