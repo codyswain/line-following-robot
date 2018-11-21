@@ -1,3 +1,5 @@
+/* Cody Swain and JD */
+/* Line-following robot */
 const int sensor1 = 65; 
 const int sensor2 = 48;
 const int sensor3 = 64;
@@ -6,6 +8,17 @@ const int sensor5 = 52;
 const int sensor6 = 68;
 const int sensor7 = 53;
 const int sensor8 = 69;
+
+// Variable sensor reading values
+// Digital ( 1 or 0)
+int read1; 
+int read2;
+int read3;
+int read4;
+int read5;
+int read6;
+int read7;
+int read8;
 
 // Sensor sampling config
 int t_on = 12; //microseconds (us)
@@ -17,7 +30,8 @@ void setup(){
 
 
 void loop(){
-
+	readSensor();
+	// Do something based off the sensor reading
 }
 
 
@@ -65,20 +79,19 @@ void readSensors(){
 	pinMode(sensor7, INPUT);
 	pinMode(sensor8, INPUT);
 
-	// Read sensor values
-	int read1 = digitalRead(sensor1);
-	int read2 = digitalRead(sensor2);
-	int read3 = digitalRead(sensor3);
-	int read4 = digitalRead(sensor4);
-	int read5 = digitalRead(sensor5);
-	int read6 = digitalRead(sensor6);
-	int read7 = digitalRead(sensor7);
-	int read8 = digitalRead(sensor8);
+	// Read sensor values and assign to global variables
+	read1 = digitalRead(sensor1);
+	read2 = digitalRead(sensor2);
+	read3 = digitalRead(sensor3);
+	read4 = digitalRead(sensor4);
+	read5 = digitalRead(sensor5);
+	read6 = digitalRead(sensor6);
+	read7 = digitalRead(sensor7);
+	read8 = digitalRead(sensor8);
 
 	//Delay for stability
   	delay(1);
 }
-
 
 
 void findDelay(){
