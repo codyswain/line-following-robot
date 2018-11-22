@@ -35,6 +35,22 @@ void loop(){
 }
 
 
+void adjustMotors(){
+	/*
+	Basic Implementation
+	---------------------------------------------
+	Overview of motor PID control
+	- Error function is the average value of sensor reading
+	- Pins assigned incrementally increasing error moving away from center
+	- Positive average means left adjustment
+	- Negative average means right adjustment needed
+	*/
+
+	
+
+}
+
+
 void readSensors(){
 	/*
 	Pseudocode for sensor:
