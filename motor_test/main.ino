@@ -11,7 +11,7 @@ int sensorError[] = {-3, -2, -1, 0, 0, 1, 2, 3};
 
 // Sensor sampling config
 int t_on = 12; //microseconds (us)
-int t_wait = 500000; //this value is really high?
+int t_wait = 100000; //microseconds (us)
 
 // Left Motor Pin Declarations
 const int LEFT_PWM = 40;
@@ -22,6 +22,10 @@ const int LEFT_SLP = 31;
 const int RIGHT_PWM = 39;
 const int RIGHT_DIR = 15;
 const int RIGHT_SLP = 11; 
+
+// Variable PWM Values
+int rightPWM = 30;
+int leftPWM = 30; 
 
 void setup(){
   // Set up serial monitor
@@ -100,7 +104,11 @@ void readSensors(){
     Serial.print(count);
     Serial.print(": ");
     Serial.print(sensorRead[count]); 
+    Serial.print("   ");
   }
+  sensorRead[0] = 0;
+  sensorRead[7] = 0;
+  Serial.println();
 
   //Delay for stability?
     delay(1);
@@ -113,7 +121,9 @@ float calculateMotorCorrection(){
   for (int count=0; count<8; count++){
     if (sensorRead[count] == 1){
       sum += sensorError[count];
-      activePinCount += 1; 
+      if (count != 3 && count != 4){
+        activePinCount += 1; 
+      }
     }
   }
   error = sum / activePinCount;
@@ -121,22 +131,18 @@ float calculateMotorCorrection(){
 }
 
 void correctMotors(float error){
-	if (error == 0){
-		digitalWrite(LEFT_DIR, LOW);
-		digitalWrite(RIGHT_DIR, LOW);
-		analogWrite(LEFT_PWM, 60);
-		analogWrite(RIGHT_PWM, 60);
-	} else if (error > 0){
-		digitalWrite(LEFT_DIR, LOW);
-		digitalWrite(RIGHT_DIR, LOW);
-		analogWrite(LEFT_PWM, 60);
-		analogWrite(RIGHT_PWM, 0);
-	} else if (error < 0){
-		digitalWrite(LEFT_DIR, LOW);
-		digitalWrite(RIGHT_DIR, LOW);
-		analogWrite(LEFT_PWM, 0);
-		analogWrite(RIGHT_PWM, 60);
-	}
+  if (error > 0){
+    leftPWM = 0;
+    rightPWM = 30;
+  } else if (error < 0){
+    leftPWM = 30;
+    rightPWM = 0; 
+  } else if (error == 0){
+    leftPWM = 30;
+    rightPWM = 30; 
+  }
+  analogWrite(LEFT_PWM, leftPWM);
+  analogWrite(RIGHT_PWM, rightPWM);
 }
 
 
@@ -156,7 +162,6 @@ void correctMotors(float error){
 //  int time_elapsed = end_time - start_time;
 //  Serial.println(time_elapsed);
 //}
-
 
 
 
