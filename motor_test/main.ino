@@ -7,7 +7,7 @@ int sensorPins[] = {65, 48, 64, 47, 52, 68, 53, 69};
 // sensorRead elements updated with each sensorRead()
 int sensorRead[8]; // 1 or 0
 
-int sensorError[] = {-3, -2, -1, 0, 0, 1, 2, 3};
+int sensorError[] = {3, 2, 1, 0, 0, -1, -2, 3};
 
 // Sensor sampling config
 int t_on = 12; //microseconds (us)
@@ -132,11 +132,11 @@ float calculateMotorCorrection(){
 
 void correctMotors(float error){
   if (error > 0){
-    leftPWM = 0;
-    rightPWM = 30;
-  } else if (error < 0){
     leftPWM = 30;
     rightPWM = 0; 
+  } else if (error < 0){
+    leftPWM = 0;
+    rightPWM = 30;
   } else if (error == 0){
     leftPWM = 30;
     rightPWM = 30; 
@@ -162,6 +162,10 @@ void correctMotors(float error){
 //  int time_elapsed = end_time - start_time;
 //  Serial.println(time_elapsed);
 //}
+
+
+
+
 
 
 
