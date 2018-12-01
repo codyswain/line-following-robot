@@ -97,6 +97,9 @@ void readSensors(){
   // Read sensor values and assign to global variables
   for (int count=0; count<8; count++){
     sensorRead[count] = digitalRead(sensorPins[count]);
+    Serial.print(count);
+    Serial.print(": ");
+    Serial.print(sensorRead[count]); 
   }
 
   //Delay for stability?
