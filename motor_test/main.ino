@@ -20,9 +20,11 @@ void setup(){
 
 void loop(){
 	readSensor();
-	
+
 	// Do something based off the sensor reading
-	calculateMotorCorrection(); 
+	float error = 0 ;
+	error = calculateMotorCorrection(); 
+	System.println(error);
 
 }
 
@@ -32,9 +34,18 @@ void calculateProportionalError(){
 void calculateDerivativeError(){
 	return 0;
 }
-void calculateMotorCorrection(){
-	
-	return 0;
+float calculateMotorCorrection(){
+	float error = 0;
+	float sum = 0;
+	float activePinCount = 0;
+	for (count=0; count<8; count++){
+		if (sensorRead[count] == 1){
+			sum += sensorError[count];
+			activePinCount += 1; 
+		}
+	}
+	error = sum / activePinCount;
+	return error; 
 }
 
 void readSensors(){
