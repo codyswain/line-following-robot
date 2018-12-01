@@ -7,6 +7,8 @@ int sensorPins[] = {65, 48, 64, 47, 52, 68, 53, 69};
 // sensorRead elements updated with each sensorRead()
 int sensorRead[8]; // 1 or 0
 
+int sensorError[] = {-3, -2, -1, 0, 0, 1, 2, 3};
+
 // Sensor sampling config
 int t_on = 12; //microseconds (us)
 int t_wait = 500000; //this value is really high?
@@ -18,7 +20,10 @@ void setup(){
 
 void loop(){
 	readSensor();
+	
 	// Do something based off the sensor reading
+	calculateMotorCorrection(); 
+
 }
 
 void calculateProportionalError(){
@@ -27,7 +32,8 @@ void calculateProportionalError(){
 void calculateDerivativeError(){
 	return 0;
 }
-void motorCorrection(){
+void calculateMotorCorrection(){
+	
 	return 0;
 }
 
