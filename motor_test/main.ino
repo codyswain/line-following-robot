@@ -106,12 +106,22 @@ void readSensors(){
     Serial.print(sensorRead[count]); 
     Serial.print("   ");
   }
-  sensorRead[0] = 0;
-  sensorRead[7] = 0;
+//  sensorRead[0] = 0;
+//  sensorRead[7] = 0;
   Serial.println();
 
   //Delay for stability?
     delay(1);
+}
+
+float changeMapping(float input){
+  float output = abs(input)/(2.5) * (80);
+  return output; 
+}
+
+float invertedMapping(float input){
+  float output = 2.5/abs(input) * (10);
+  return output; 
 }
 
 float calculateMotorCorrection(){
@@ -132,15 +142,21 @@ float calculateMotorCorrection(){
 
 void correctMotors(float error){
   if (error > 0){
-    leftPWM = 30;
-    rightPWM = 0; 
+    leftPWM = changeMapping(error);
+    rightPWM = invertedMapping(error); 
   } else if (error < 0){
-    leftPWM = 0;
-    rightPWM = 30;
+    leftPWM = invertedMapping(error);
+    rightPWM = changeMapping(error);
   } else if (error == 0){
-    leftPWM = 30;
-    rightPWM = 30; 
+    leftPWM = 30;//changeMapping(error);
+    rightPWM = 30;//changeMapping(error); 
   }
+  Serial.print("Left PWM: ");
+  Serial.print(leftPWM);
+  Serial.println();
+  Serial.print("Right PWM: ");
+  Serial.print(rightPWM);
+  Serial.println();
   analogWrite(LEFT_PWM, leftPWM);
   analogWrite(RIGHT_PWM, rightPWM);
 }
@@ -162,6 +178,9 @@ void correctMotors(float error){
 //  int time_elapsed = end_time - start_time;
 //  Serial.println(time_elapsed);
 //}
+
+
+
 
 
 
