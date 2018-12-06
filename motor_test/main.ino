@@ -12,6 +12,9 @@ int sensorError[] = {3, 2, 1, 0, 0, -1, -2, 3};
 // Sensor sampling config
 int t_on = 12; //microseconds (us)
 int t_wait = 100000; //microseconds (us)
+/*  Since our sensors are extremely sensitive
+    change this to 90000
+    or 75000 */
 
 // Left Motor Pin Declarations
 const int LEFT_PWM = 40;
@@ -61,15 +64,6 @@ void loop(){
   correctMotors(error);
 }
 
-//void calculateProportionalError(){
-//  return 0;
-//}
-//
-//void calculateDerivativeError(){
-//  return 0;
-//}
-
-
 void readSensors(){
   /*
   How to read from sensors:
@@ -106,12 +100,10 @@ void readSensors(){
     Serial.print(sensorRead[count]); 
     Serial.print("   ");
   }
-//  sensorRead[0] = 0;
-//  sensorRead[7] = 0;
   Serial.println();
 
   //Delay for stability?
-    delay(1);
+  delay(1);
 }
 
 float changeMapping(float input){
@@ -160,9 +152,6 @@ void correctMotors(float error){
   analogWrite(LEFT_PWM, leftPWM);
   analogWrite(RIGHT_PWM, rightPWM);
 }
-
-
-
 
 //void findDelay(){
 //  /* Find minimum t_wait for sensor to 
